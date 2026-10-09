@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover'>
+    <title>MedMate - Admin & Caregiver Setup Dashboard</title>
+    <link rel='stylesheet' href='css/style.css'>
+    <link rel='stylesheet' href='css/admin.css'>
+</head>
+<body>
+    <div class="app-frame wide">
+        <header class="schedule-header-bar">
+            <a href="index.html" class="brand-badge">
+                <div class="brand-pill-icon"></div>
+                <span>MedMate</span>
+            </a>
+
+            <nav class="top-center-nav" aria-label="Main Navigation">
+                <a href="index.html" class="header-tab-pill">
+                    <span>🎙️ Voice</span>
+                </a>
+                <a href="calendar.html" class="header-tab-pill">
+                    <span>📅 Calendar</span>
+                </a>
+                <a href="profile.html" class="header-tab-pill">
+                    <span>👤 Profile</span>
+                </a>
+                <a href="admin.html" class="header-tab-pill active" aria-current="page">
+                    <span>⚙️ Admin</span>
+                </a>
+            </nav>
+
+            <div class="header-user-badge">
+                <span>Caregiver Mode</span>
+                <div class="user-avatar-wrap">
+                    <img src="icons/icon-192.png" alt="Caregiver" class="user-avatar-img">
+                    <div class="avatar-online-dot"></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="admin-nav-tabs">
+            <button class="admin-nav-tab tab-btn active" data-tab="medications">💊 Medications Setup</button>
+            <button class="admin-nav-tab tab-btn" data-tab="schedule">📅 Today's Schedule</button>
+            <button class="admin-nav-tab tab-btn" data-tab="history">📜 History & Compliance</button>
+            <button class="admin-nav-tab tab-btn" data-tab="demo">🎯 Demo & Voice Testing</button>
+        </div>
+
+        <!-- Tab 1: Medications Setup -->
+        <div class="tab-content active" id="tab-medications">
+            <div class="admin-cyber-card">
+                <h2 style="color:#ffffff; font-size:1.2rem; margin-bottom:14px;">Add / Edit Prescribed Medication</h2>
+                <form id="medication-form" class="med-form">
+                    <input type="hidden" id="med-id">
+                    <div class="form-group">
+                        <label for="med-name">Medicine Name</label>
+                        <input type="text" id="med-name" placeholder="e.g. Metformin 500mg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="med-time">Scheduled Time</label>
+                        <input type="time" id="med-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="med-frequency">Frequency</label>
+                        <select id="med-frequency" required>
+                            <option value="daily">Daily</option>
+                            <option value="twice_daily">Twice Daily</option>
+                            <option value="weekly">Weekly</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="med-instruction">Food Instruction</label>
+                        <select id="med-instruction" required>
+                            <option value="After food">After food</option>
+                            <option value="Before food">Before food</option>
+                            <option value="With food">With food</option>
+                            <option value="No restriction">No restriction</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="med-dosage">Dosage</label>
+                        <input type="text" id="med-dosage" placeholder="e.g., 1 Tablet">
+                    </div>
+                    <div class="form-group">
+                        <label for="med-notes">Notes</label>
+                        <input type="text" id="med-notes" placeholder="e.g. Diabetes management">
+                    </div>
+                    <div class="form-actions" style="margin-top:10px;">
+                        <button type="submit" class="btn btn-primary" id="save-med-btn">Add Medication</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-med-btn" style="display:none;">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="admin-cyber-card">
+                <h3 style="color:#ffffff; font-size:1.1rem; margin-bottom:12px;">Active Medication Schedule</h3>
+                <div class="table-responsive">
+                    <table id="medications-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Time</th>
+                                <th>Frequency</th>
+                                <th>Instruction</th>
+                                <th>Dosage</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Today's Schedule -->
+        <div class="tab-content" id="tab-schedule">
+            <div class="admin-cyber-card">
+                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <h2 style="color:#ffffff; font-size:1.2rem;">Today's Schedule & Real-Time Status</h2>
+                    <button class="btn btn-small btn-primary" id="refresh-schedule-btn">Refresh</button>
+                </div>
+                <div class="table-responsive">
+                    <table id="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Medicine</th>
+                                <th>Instruction</th>
+                                <th>Status</th>
+                                <th>Taken At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: History -->
+        <div class="tab-content" id="tab-history">
+            <div class="admin-cyber-card">
+                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <h2 style="color:#ffffff; font-size:1.2rem;">Medication Adherence History</h2>
+                    <div class="filter-group">
+                        <label for="history-date" style="color:#94a3b8; font-size:0.85rem;">Filter Date:</label>
+                        <input type="date" id="history-date">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date/Time</th>
+                                <th>Medicine</th>
+                                <th>Scheduled Time</th>
+                                <th>Status</th>
+                                <th>Patient Response</th>
+                                <th>Language</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Demo & Testing -->
+        <div class="tab-content" id="tab-demo">
+            <div class="admin-cyber-card demo-controls">
+                <h2 style="color:#ffffff; font-size:1.2rem; margin-bottom:12px;">Demo Simulation Controls</h2>
+                <div class="action-buttons" style="display:flex; gap:12px; margin-bottom:14px; flex-wrap:wrap;">
+                    <button id="trigger-reminder-btn" class="btn btn-warning btn-large">🎯 Trigger Instant Reminder</button>
+                    <button id="seed-data-btn" class="btn btn-primary btn-large">🌱 Seed Demo Data (4 Medications)</button>
+                </div>
+                <div id="demo-result" class="demo-result" style="background:#0f172a; padding:12px; border-radius:10px; font-family:monospace; color:#38bdf8; font-size:0.85rem;"></div>
+            </div>
+
+            <div class="admin-cyber-card">
+                <h2 style="color:#ffffff; font-size:1.2rem; margin-bottom:12px;">AI Interaction Logs (Tamil / English / Tanglish)</h2>
+                <div class="table-responsive">
+                    <table id="interactions-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>User Said</th>
+                                <th>MedMate Replied</th>
+                                <th>Detected Intent</th>
+                                <th>Language</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='js/admin.js'></script>
+</body>
+</html>

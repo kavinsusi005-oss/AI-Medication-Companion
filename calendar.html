@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0d1520">
+    <meta name="description" content="MedMate Schedule & Daily Dose Timeline">
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+
+    <title>MedMate - Schedule & Daily Dose Timeline</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-frame wide">
+        <!-- Top Header Bar -->
+        <header class="schedule-header-bar">
+            <a href="index.html" class="brand-badge">
+                <div class="brand-pill-icon"></div>
+                <span>MedMate</span>
+            </a>
+
+            <nav class="top-center-nav" aria-label="Main Navigation">
+                <a href="index.html" class="header-tab-pill">
+                    <span>🎙️ Voice</span>
+                </a>
+                <a href="calendar.html" class="header-tab-pill active" aria-current="page">
+                    <span>📅 Calendar</span>
+                </a>
+                <a href="profile.html" class="header-tab-pill">
+                    <span>👥 Care Team</span>
+                </a>
+                <a href="profile.html" class="header-tab-pill">
+                    <span>👤 Profile</span>
+                </a>
+                <a href="admin.html" class="header-tab-pill">
+                    <span>⚙️ Admin</span>
+                </a>
+            </nav>
+
+            <div class="header-user-badge">
+                <span>Viewing: <strong id="patient-name-display" style="color:#ffffff;">Mrs. Smith's Schedule</strong></span>
+                <div class="user-avatar-wrap">
+                    <img src="icons/icon-192.png" alt="Patient Avatar" class="user-avatar-img">
+                    <div class="avatar-online-dot"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sub-Header Controls -->
+        <div class="schedule-sub-header">
+            <div class="month-control-box">
+                <button class="month-nav-arrow" id="prev-month-btn" aria-label="Previous Month">❮</button>
+                <button class="month-picker-btn" id="month-picker-btn">
+                    <span id="current-month-label">October 2026</span> <span>▾</span>
+                </button>
+                <button class="month-nav-arrow" id="next-month-btn" aria-label="Next Month">❯</button>
+            </div>
+
+            <h1 class="schedule-main-title" id="schedule-heading">Schedule: October 2026</h1>
+        </div>
+
+        <!-- Two-Column Main Layout -->
+        <div class="schedule-grid-layout">
+            <!-- Left Column: Daily Dose Timeline -->
+            <section class="dose-timeline-container">
+                <div class="timeline-top-bar">
+                    <div>
+                        <div class="timeline-heading">Daily Dose Timeline</div>
+                        <div class="timeline-date-sub" id="timeline-date-label">Monday, Oct 19, 2026</div>
+                    </div>
+                    <div class="timeline-legend">
+                        <div class="legend-item"><div class="legend-dot taken"></div> <span>Taken</span></div>
+                        <div class="legend-item"><div class="legend-dot pending"></div> <span>Pending</span></div>
+                        <div class="legend-item"><div class="legend-dot missed"></div> <span>Red=Missed</span></div>
+                    </div>
+                </div>
+
+                <!-- Timeline Slots & Doses -->
+                <div class="timeline-slots-wrap" id="timeline-slots-wrap">
+                    <!-- Morning Block (8:00 AM) -->
+                    <div class="timeline-slot">
+                        <div class="slot-time-col">
+                            <span class="slot-time-name">Morning</span>
+                            <span class="slot-time-clock">(8:00 AM)</span>
+                        </div>
+                        <div class="slot-node-dot active"></div>
+                        <div class="slot-cards-row">
+                            <div class="dose-card pending-focus" id="dose-card-1">
+                                <div class="dose-card-header">
+                                    <span class="dose-status-badge">Pending (Mark Taken)</span>
+                                </div>
+                                <div class="dose-content-row">
+                                    <div class="dose-pill-visual green"></div>
+                                    <div class="dose-info-col">
+                                        <span class="dose-name">Metformin 500mg</span>
+                                        <span class="dose-subtext">1 Tablet - Take with food</span>
+                                    </div>
+                                </div>
+                                <button class="mark-taken-btn" onclick="markDoseTaken(1, 'Metformin 500mg')">Mark Taken</button>
+                            </div>
+
+                            <div class="dose-card taken-verified" id="dose-card-2">
+                                <div class="dose-card-header">
+                                    <span class="dose-status-badge verified">Taken (Verified)</span>
+                                </div>
+                                <div class="dose-content-row">
+                                    <div class="dose-pill-visual pink">MG</div>
+                                    <div class="dose-info-col">
+                                        <span class="dose-name">Lisinopril</span>
+                                        <span class="dose-subtext">1 Tablet - Take with food</span>
+                                    </div>
+                                </div>
+                                <div class="dose-verified-msg">
+                                    <span>✓</span> <span>Taken at 8:05 AM<br>(Verified by Sarah (Caregiver))</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Afternoon Block (1:00 PM) -->
+                    <div class="timeline-slot">
+                        <div class="slot-time-col">
+                            <span class="slot-time-name">Afternoon</span>
+                            <span class="slot-time-clock">(1:00 PM)</span>
+                        </div>
+                        <div class="slot-node-dot"></div>
+                        <div class="slot-cards-row">
+                            <div class="dose-card" id="dose-card-3">
+                                <div class="dose-content-row">
+                                    <div class="dose-pill-visual pink"></div>
+                                    <div class="dose-info-col">
+                                        <span class="dose-name">Lisinopril 500mg</span>
+                                        <span class="dose-subtext">1 Tablet - Take with food</span>
+                                    </div>
+                                </div>
+                                <button class="mark-taken-btn secondary" onclick="markDoseTaken(3, 'Lisinopril 500mg')">Mark Taken</button>
+                            </div>
+
+                            <div class="dose-card" id="dose-card-4">
+                                <div class="dose-content-row">
+                                    <div class="dose-pill-visual blue"></div>
+                                    <div class="dose-info-col">
+                                        <span class="dose-name">Lisinopril 500mg</span>
+                                        <span class="dose-subtext">1 Tablet - Take with food</span>
+                                    </div>
+                                </div>
+                                <button class="mark-taken-btn secondary" onclick="markDoseTaken(4, 'Lisinopril 500mg')">Mark Taken</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Evening Block (6:00 PM) -->
+                    <div class="timeline-slot">
+                        <div class="slot-time-col">
+                            <span class="slot-time-name">Evening</span>
+                            <span class="slot-time-clock">(6:00 PM)</span>
+                        </div>
+                        <div class="slot-node-dot"></div>
+                        <div class="slot-cards-row">
+                            <div class="dose-card" id="dose-card-5">
+                                <div class="dose-content-row">
+                                    <div class="dose-pill-visual green"></div>
+                                    <div class="dose-info-col">
+                                        <span class="dose-name">Metformin 500mg</span>
+                                        <span class="dose-subtext">1 Tablet - Take with food</span>
+                                    </div>
+                                </div>
+                                <button class="mark-taken-btn secondary" onclick="markDoseTaken(5, 'Metformin 500mg')">Mark Taken</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Night Block (9:00 PM) -->
+                    <div class="timeline-slot">
+                        <div class="slot-time-col">
+                            <span class="slot-time-name">Night</span>
+                            <span class="slot-time-clock">(9:00 PM)</span>
+                        </div>
+                        <div class="slot-node-dot"></div>
+                        <div class="slot-cards-row">
+                            <div class="dose-card" id="dose-card-6">
+                                <div class="dose-content-row">
+                                    <div class="dose-pill-visual pink"></div>
+                                    <div class="dose-info-col">
+                                        <span class="dose-name">Lisinopril 500mg</span>
+                                        <span class="dose-subtext">1 Tablet - Take with food</span>
+                                    </div>
+                                </div>
+                                <button class="mark-taken-btn secondary" onclick="markDoseTaken(6, 'Lisinopril 500mg')">Mark Taken</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Sidebar Panels -->
+            <aside class="schedule-sidebar">
+                <div class="mini-calendar-card">
+                    <div class="mini-cal-header">
+                        <div class="mini-cal-title" id="mini-cal-title">October 2026</div>
+                        <div class="adherence-tag">Monthly Adherence: 95%</div>
+                    </div>
+
+                    <div class="mini-cal-grid">
+                        <div class="cal-head-cell">Sun</div>
+                        <div class="cal-head-cell">Mon</div>
+                        <div class="cal-head-cell">Tue</div>
+                        <div class="cal-head-cell">Wed</div>
+                        <div class="cal-head-cell">Thu</div>
+                        <div class="cal-head-cell">Fri</div>
+                        <div class="cal-head-cell">Sat</div>
+
+                        <div id="mini-cal-cells-container" style="display:contents;">
+                        </div>
+                    </div>
+
+                    <div class="mini-cal-footer">
+                        Monthly Adherence: 95%
+                    </div>
+                </div>
+
+                <div class="caregiver-feed-card">
+                    <div class="caregiver-header">
+                        <div class="caregiver-title">Caregiver Overview</div>
+                        <div class="live-feed-badge">Live feed</div>
+                    </div>
+
+                    <div class="feed-item-row">
+                        <div class="feed-avatar-wrap">
+                            <img src="icons/icon-192.png" alt="Sarah" class="feed-avatar-img">
+                            <div class="avatar-online-dot"></div>
+                        </div>
+                        <div class="feed-content">
+                            <div class="feed-main-text">Sarah updated Lisinopril instructions</div>
+                            <div class="feed-sub-text">Taken at Feed · 30 minutes ago</div>
+                        </div>
+                    </div>
+
+                    <div class="feed-item-row">
+                        <div class="feed-icon-box">📱</div>
+                        <div class="feed-content">
+                            <div class="feed-main-text">Remote Awareness: Blood Pressure Check confirmed</div>
+                            <div class="feed-sub-text">25 minutes ago</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Footer Banner Note -->
+        <footer class="schedule-footer-banner">
+            <div>Select a date to view detailed medication doses, instructions, and caregiver support history.</div>
+            <div class="footer-lock-note">
+                <span>🔒</span> <span>Double-dosing is prevented by locking 'Taken' status.</span>
+            </div>
+            <div class="corner-sparkle">✦</div>
+        </footer>
+    </div>
+
+    <div id="toast-msg" class="toast-msg"></div>
+
+    <script src="js/calendar.js"></script>
+</body>
+</html>

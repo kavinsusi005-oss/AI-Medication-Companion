@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0d1520">
+    <meta name="description" content="MedMate User Profile & Settings">
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+
+    <title>MedMate - User Profile & Caregiver Contacts</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-container-card {
+            background: rgba(17, 27, 40, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .profile-header-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .profile-avatar-large {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .profile-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-top: 16px;
+            margin-bottom: 12px;
+        }
+        .form-group-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .form-group-field label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+        .form-group-field input, .form-group-field select {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 0.92rem;
+            outline: none;
+        }
+        .form-group-field input:focus, .form-group-field select:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+        }
+        .save-profile-btn {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-frame" style="max-width: 800px;">
+        <header class="schedule-header-bar">
+            <a href="index.html" class="brand-badge">
+                <div class="brand-pill-icon"></div>
+                <span>MedMate</span>
+            </a>
+
+            <nav class="top-center-nav" aria-label="Main Navigation">
+                <a href="index.html" class="header-tab-pill">
+                    <span>🎙️ Voice</span>
+                </a>
+                <a href="calendar.html" class="header-tab-pill">
+                    <span>📅 Calendar</span>
+                </a>
+                <a href="profile.html" class="header-tab-pill active" aria-current="page">
+                    <span>👤 Profile</span>
+                </a>
+                <a href="admin.html" class="header-tab-pill">
+                    <span>⚙️ Admin</span>
+                </a>
+            </nav>
+
+            <div class="header-user-badge">
+                <span id="patient-name-top">Mrs. Smith</span>
+                <div class="user-avatar-wrap">
+                    <img src="icons/icon-192.png" alt="Avatar" class="user-avatar-img">
+                    <div class="avatar-online-dot"></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="profile-container-card">
+            <div class="profile-header-box">
+                <div class="profile-avatar-large">👤</div>
+                <div>
+                    <h2 id="display-profile-name" style="color:#ffffff; font-size:1.3rem;">Mrs. Smith</h2>
+                    <p style="color:#94a3b8; font-size:0.85rem;">MedMate Zero-Learning Voice Companion</p>
+                </div>
+            </div>
+
+            <form id="profile-form">
+                <div class="profile-section-title">👤 Patient Details</div>
+                <div class="form-group-field">
+                    <label for="profile-name">Senior's Full Name</label>
+                    <input type="text" id="profile-name" value="Mrs. Smith" required>
+                </div>
+                <div class="form-group-field">
+                    <label for="profile-age">Age</label>
+                    <input type="number" id="profile-age" value="74">
+                </div>
+
+                <div class="profile-section-title">📞 Emergency & Caregiver Contact</div>
+                <div class="form-group-field">
+                    <label for="emergency-name">Caregiver / Family Contact Name</label>
+                    <input type="text" id="emergency-name" value="Sarah (Daughter / Caregiver)">
+                </div>
+                <div class="form-group-field">
+                    <label for="emergency-phone">Emergency Phone Number</label>
+                    <input type="tel" id="emergency-phone" value="+91 98765 43210">
+                </div>
+
+                <div class="profile-section-title">🩺 Medical & Speech Preferences</div>
+                <div class="form-group-field">
+                    <label for="doctor-name">Primary Physician / Hospital</label>
+                    <input type="text" id="doctor-name" value="Dr. Arvind (Apollo Health)">
+                </div>
+                <div class="form-group-field">
+                    <label for="pref-language">Default Voice Language</label>
+                    <select id="pref-language">
+                        <option value="auto" selected>Auto-Detect (Tamil / English / Tanglish)</option>
+                        <option value="ta">Tamil (தமிழ்)</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="save-profile-btn">
+                    💾 Save Profile & Settings
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-msg" class="toast-msg"></div>
+
+    <script src="js/profile.js"></script>
+</body>
+</html>

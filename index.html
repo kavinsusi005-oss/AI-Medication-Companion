@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0b1118">
+    <meta name="description" content="MedMate AI Voice Assistant - Zero-learning medication companion for senior citizens.">
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MedMate">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+
+    <title>MedMate AI Voice Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-frame">
+        <!-- Top Segmented Navigation Pills -->
+        <nav class="top-nav-bar" aria-label="Main Navigation">
+            <a href="index.html" class="nav-pill active" aria-current="page">
+                <span>🎙️ Voice</span>
+            </a>
+            <a href="calendar.html" class="nav-pill">
+                <span>📅 Calendar</span>
+            </a>
+            <a href="profile.html" class="nav-pill">
+                <img src="icons/icon-192.png" alt="Avatar" class="nav-avatar" id="nav-user-avatar">
+                <span id="nav-user-label">Profile (Alex)</span>
+            </a>
+            <a href="admin.html" class="nav-pill">
+                <span>🛠️ Admin</span>
+            </a>
+        </nav>
+
+        <!-- Greeting Section -->
+        <h1 class="greeting-title" id="greeting-title">
+            <span id="greeting-text">Good Morning, Alex</span> <span id="greeting-emoji">☀️</span>
+        </h1>
+
+        <!-- AI Status Cyber Card -->
+        <div class="ai-status-wrapper">
+            <div class="ai-status-card" id="ai-status-card" role="region" aria-live="polite">
+                <div class="ai-status-title">
+                    AI STATUS: <span class="ready-state" id="ai-state-label">READY</span>
+                </div>
+                <div class="ai-status-sub" id="ai-state-sub">
+                    Connected | Awaiting input. Tap microphone or speak naturally
+                </div>
+            </div>
+        </div>
+
+        <!-- Awaiting Command Hint Text -->
+        <div class="awaiting-command-hint" id="last-command-hint">
+            ...awaiting user query... (last command: morning medicine)...
+        </div>
+
+        <!-- Voice Stage with Side Cards and Center Energy Orb -->
+        <div class="voice-stage-container">
+            <!-- Left: Recent History -->
+            <div class="side-card">
+                <div class="side-card-title">Recent History</div>
+                <div class="side-card-item" onclick="triggerPreset('Metformin 500mg taken')">
+                    <span class="check">✓</span> <span>Metformin 500mg</span>
+                </div>
+                <div class="side-card-item" onclick="triggerPreset('Morning reminder confirmed')">
+                    <span class="check">✓</span> <span>Morning reminder</span>
+                </div>
+                <div class="side-card-item" onclick="triggerPreset('Blood pressure tablet')">
+                    <span class="check">✓</span> <span>BP medicine</span>
+                </div>
+            </div>
+
+            <!-- Center: Swirling Neon Energy Orb with Studio Microphone -->
+            <div class="mic-orb-wrapper" id="mic-orb-wrapper">
+                <div class="orb-ring-outer"></div>
+                <div class="orb-ring-inner"></div>
+
+                <button id="studio-mic-btn" class="studio-mic-btn" aria-label="Tap to Speak" aria-expanded="false">
+                    <!-- Vector Studio Retro Microphone SVG -->
+                    <svg class="mic-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="micBodyGrad" x1="0" y1="0" x2="100" y2="100">
+                                <stop offset="0%" stop-color="#818cf8"/>
+                                <stop offset="50%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#4338ca"/>
+                            </linearGradient>
+                            <linearGradient id="metalGrad" x1="0" y1="0" x2="0" y2="100">
+                                <stop offset="0%" stop-color="#f8fafc"/>
+                                <stop offset="50%" stop-color="#94a3b8"/>
+                                <stop offset="100%" stop-color="#475569"/>
+                            </linearGradient>
+                            <linearGradient id="grillGrad" x1="0" y1="0" x2="100" y2="0">
+                                <stop offset="0%" stop-color="#e2e8f0"/>
+                                <stop offset="50%" stop-color="#cbd5e1"/>
+                                <stop offset="100%" stop-color="#94a3b8"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Stand Base -->
+                        <path d="M40 82 L60 82 L60 88 L40 88 Z" fill="url(#metalGrad)"/>
+                        <path d="M48 68 L52 68 L52 82 L48 82 Z" fill="url(#metalGrad)"/>
+                        <circle cx="50" cy="88" r="8" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+
+                        <!-- U-Shaped Metal Swivel Arm -->
+                        <path d="M26 38 C26 56 36 68 50 68 C64 68 74 56 74 38" stroke="url(#metalGrad)" stroke-width="4.5" stroke-linecap="round"/>
+                        <circle cx="26" cy="38" r="3.5" fill="#f8fafc"/>
+                        <circle cx="74" cy="38" r="3.5" fill="#f8fafc"/>
+
+                        <!-- Mic Capsule Body (Purple / Indigo Glossy Finish) -->
+                        <rect x="34" y="16" width="32" height="42" rx="16" fill="url(#micBodyGrad)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+
+                        <!-- Metallic Middle Ring -->
+                        <rect x="32" y="34" width="36" height="5" rx="2" fill="url(#metalGrad)" stroke="#334155" stroke-width="0.8"/>
+
+                        <!-- Upper Mesh Grill -->
+                        <path d="M34 32 C34 20 40 16 50 16 C60 16 66 20 66 32 Z" fill="url(#grillGrad)" opacity="0.85"/>
+                        <line x1="38" y1="24" x2="62" y2="24" stroke="#475569" stroke-width="1"/>
+                        <line x1="40" y1="28" x2="60" y2="28" stroke="#475569" stroke-width="1"/>
+                        <line x1="44" y1="18" x2="44" y2="34" stroke="#475569" stroke-width="1"/>
+                        <line x1="50" y1="16" x2="50" y2="34" stroke="#475569" stroke-width="1"/>
+                        <line x1="56" y1="18" x2="56" y2="34" stroke="#475569" stroke-width="1"/>
+
+                        <circle cx="50" cy="46" r="2.5" fill="#38bdf8" filter="drop-shadow(0 0 4px #38bdf8)"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Right: Suggestions -->
+            <div class="side-card">
+                <div class="side-card-title">Suggestions</div>
+                <div class="side-card-item" onclick="triggerPreset('Check my medications schedule')">
+                    <span>💊</span> <span>Check Medicines</span>
+                </div>
+                <div class="side-card-item" onclick="triggerPreset('Remind me after ten minutes')">
+                    <span>⏰</span> <span>Remind 10 min</span>
+                </div>
+                <div class="side-card-item" onclick="triggerPreset('நான் எடுத்துட்டேன்')">
+                    <span>🗣️</span> <span>Speak Tamil</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tap to Speak Caption -->
+        <div class="tap-to-speak-label">
+            <div class="tap-to-speak-main" id="tap-speak-caption">TAP TO SPEAK</div>
+            <div class="tap-to-speak-sub" id="tap-speak-subcaption">or just start talking</div>
+        </div>
+
+        <!-- Audio Waveform Visualizer -->
+        <div class="waveform-container" id="waveform-visualizer">
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        </div>
+
+        <!-- Transcript Chat Area -->
+        <div class="transcript-area" id="transcript-area" role="log" aria-live="polite">
+        </div>
+
+        <!-- Bottom Query Input Bar -->
+        <div class="bottom-input-bar">
+            <input type="text" id="query-text-input" placeholder="Type complex queries, commands, or 'help' here..." autocomplete="off" enterkeyhint="send">
+            <button id="send-pill-btn" class="send-pill-btn" aria-label="Send Query">
+                <span>Send</span> <span>❯</span>
+            </button>
+        </div>
+
+        <!-- Bottom Footer with User Name & Sparkle -->
+        <div class="bottom-footer">
+            <span class="footer-username" id="footer-username">Alex...</span>
+            <span class="sparkle-icon" aria-hidden="true">✦</span>
+        </div>
+    </div>
+
+    <!-- Floating Toast Notification -->
+    <div id="toast-msg" class="toast-msg"></div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.error('SW registration failed:', err));
+            });
+        }
+    </script>
+    <script src="js/senior.js"></script>
+</body>
+</html>
