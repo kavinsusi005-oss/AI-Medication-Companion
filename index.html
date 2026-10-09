@@ -6,13 +6,13 @@
     <meta name="theme-color" content="#0b1118">
     <meta name="description" content="MedMate AI Voice Assistant - Zero-learning medication companion for senior citizens.">
 
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MedMate">
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
     <title>MedMate AI Voice Assistant</title>
     <link rel="stylesheet" href="css/style.css">
@@ -110,7 +110,7 @@
                         <circle cx="26" cy="38" r="3.5" fill="#f8fafc"/>
                         <circle cx="74" cy="38" r="3.5" fill="#f8fafc"/>
 
-                        <!-- Mic Capsule Body (Purple / Indigo Glossy Finish) -->
+                        <!-- Mic Capsule Body -->
                         <rect x="34" y="16" width="32" height="42" rx="16" fill="url(#micBodyGrad)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
 
                         <!-- Metallic Middle Ring -->
@@ -124,6 +124,7 @@
                         <line x1="50" y1="16" x2="50" y2="34" stroke="#475569" stroke-width="1"/>
                         <line x1="56" y1="18" x2="56" y2="34" stroke="#475569" stroke-width="1"/>
 
+                        <!-- Center Status Indicator Dot -->
                         <circle cx="50" cy="46" r="2.5" fill="#38bdf8" filter="drop-shadow(0 0 4px #38bdf8)"/>
                     </svg>
                 </button>
@@ -187,7 +188,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('sw.js')
                     .then(reg => console.log('SW registered:', reg.scope))
                     .catch(err => console.error('SW registration failed:', err));
             });
