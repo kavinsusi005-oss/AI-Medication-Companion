@@ -1,5 +1,9 @@
 import os
+import sys
 from datetime import datetime
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from backend.database.db import get_db, init_db
 
 def seed_database():
