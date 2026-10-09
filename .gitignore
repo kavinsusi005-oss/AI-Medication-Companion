@@ -10,3 +10,11 @@ data/*.sqlite
 .idea/
 .DS_Store
 Thumbs.db
+
+# Node & Mobile build output
+node_modules/
+android/.gradle/
+android/app/build/
+android/build/
+android/captures/
+.gradle/
