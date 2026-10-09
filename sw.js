@@ -57,6 +57,29 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url);
 
+  // HTML Page Navigation: Network-first with cached page fallback for Offline Support
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request).then((cached) => {
+            return cached || caches.match('./index.html') || caches.match('./calendar.html') || new Response(
+              '<!DOCTYPE html><html><head><title>MedMate Offline</title></head><body><h1>MedMate is Offline</h1><p>Your medicine companion is operating in offline mode.</p></body></html>',
+              { headers: { 'Content-Type': 'text/html' } }
+            );
+          });
+        })
+    );
+    return;
+  }
+
   // Widget template/data mock requests
   if (requestUrl.pathname.endsWith('widget.json') || requestUrl.pathname.endsWith('widget-data.json')) {
     event.respondWith(

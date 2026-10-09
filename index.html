@@ -187,10 +187,29 @@
 
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('SW registered:', reg.scope))
-                    .catch(err => console.error('SW registration failed:', err));
+            window.addEventListener('load', async () => {
+                try {
+                    const reg = await navigator.serviceWorker.register('sw.js');
+                    console.log('SW registered:', reg.scope);
+
+                    if ('sync' in reg) {
+                        await reg.sync.register('sync-medications');
+                        console.log('Background Sync registered');
+                    }
+
+                    if ('periodicSync' in reg) {
+                        try {
+                            await reg.periodicSync.register('check-due-meds', {
+                                minInterval: 24 * 60 * 60 * 1000
+                            });
+                            console.log('Periodic Sync registered');
+                        } catch (e) {
+                            console.log('Periodic Sync permission pending or unsupported', e);
+                        }
+                    }
+                } catch (err) {
+                    console.error('SW registration failed:', err);
+                }
             });
         }
     </script>
